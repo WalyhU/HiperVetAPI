@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.Optional;
 
 public interface ClienteService {
-    public void saveCliente(Cliente cliente);
+    public Cliente saveCliente(Cliente cliente);
     public void deleteCliente(Cliente cliente);
     public Cliente updateCliente(String codigoCliente, Cliente cliente);
     public List<Cliente> getClientes();

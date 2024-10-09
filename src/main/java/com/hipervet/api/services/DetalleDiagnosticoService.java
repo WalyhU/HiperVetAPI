@@ -8,7 +8,8 @@ import java.util.Date;
 import java.util.List;
 
 public interface DetalleDiagnosticoService {
-    public void save(DetalleDiagnostico detalleDiagnostico);
+    public DetalleDiagnostico save(DetalleDiagnostico detalleDiagnostico);
+    public DetalleDiagnostico update(Integer id, DetalleDiagnostico detalleDiagnostico);
     public void delete(DetalleDiagnostico detalleDiagnostico);
     public List<DetalleDiagnostico> findAll();
     public List<DetalleDiagnostico> findByDetalleCita(DetalleCita detalleCita);

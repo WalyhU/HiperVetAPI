@@ -14,8 +14,8 @@ public class ServicioServiceImpl implements ServicioService {
     private ServicioRepository servicioRepository;
 
     @Override
-    public void saveServicio(Servicio servicio) {
-        servicioRepository.save(servicio);
+    public Servicio saveServicio(Servicio servicio) {
+        return servicioRepository.save(servicio);
     }
 
     @Override
@@ -24,11 +24,12 @@ public class ServicioServiceImpl implements ServicioService {
     }
 
     @Override
-    public void updateServicio(Short id, Servicio servicio) {
+    public Servicio updateServicio(Short id, Servicio servicio) {
         if (servicioRepository.existsById(id)) {
             servicio.setId(id);
-            servicioRepository.save(servicio);
+            return servicioRepository.save(servicio);
         }
+        return null;
     }
 
     @Override

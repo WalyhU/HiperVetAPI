@@ -1,5 +1,7 @@
 package com.hipervet.api.entities;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -7,14 +9,14 @@ import lombok.Setter;
 @Getter
 @Setter
 @Entity
-@Table(name = "Cliente")
+@Table(name = "cliente")
 public class Cliente {
     @Id
-    @Column(name = "CodigoCliente", nullable = false, length = 10)
+    @Column(name = "codigo_cliente", nullable = false, length = 10)
     private String codigoCliente;
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "CodigoPersona", nullable = false)
+    @ManyToOne(fetch = FetchType.EAGER, optional = false)
+    @JoinColumn(name = "codigo_persona", nullable = false)
     private Persona codigoPersona;
 
 }

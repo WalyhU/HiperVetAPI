@@ -14,8 +14,8 @@ public class SucursalServiceImpl implements SucursalService {
     private SucursalRepository sucursalRepository;
 
     @Override
-    public void saveSucursal(Sucursal sucursal) {
-        sucursalRepository.save(sucursal);
+    public Sucursal saveSucursal(Sucursal sucursal) {
+        return sucursalRepository.save(sucursal);
     }
 
     @Override
@@ -24,11 +24,12 @@ public class SucursalServiceImpl implements SucursalService {
     }
 
     @Override
-    public void updateSucursal(Short id, Sucursal sucursal) {
+    public Sucursal updateSucursal(Short id, Sucursal sucursal) {
         if (sucursalRepository.existsById(id)) {
             sucursal.setId(id);
-            sucursalRepository.save(sucursal);
+            return sucursalRepository.save(sucursal);
         }
+        return null;
     }
 
     @Override

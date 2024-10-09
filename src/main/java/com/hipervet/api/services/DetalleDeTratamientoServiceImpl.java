@@ -43,7 +43,7 @@ public class DetalleDeTratamientoServiceImpl implements DetalleDeTratamientoServ
 
     @Override
     public DetalleDeTratamiento getDetalleDeTratamientoById(Tratamiento id) {
-        return null;
+        return (DetalleDeTratamiento) detalleDeTratamientoRepository.findDetalleDeTratamientosByCodigoTratamiento(id);
     }
 
     @Override

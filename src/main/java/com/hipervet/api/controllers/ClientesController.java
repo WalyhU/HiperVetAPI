@@ -2,6 +2,7 @@ package com.hipervet.api.controllers;
 
 import com.hipervet.api.entities.Cliente;
 import com.hipervet.api.services.ClienteService;
+import com.hipervet.api.services.TelefonoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -32,9 +33,9 @@ public class ClientesController {
     }
 
     @PostMapping
-    public Cliente createCliente(@RequestBody Cliente cliente) {
-        clienteService.saveCliente(cliente);
-        return cliente;
+    public ResponseEntity<Cliente> createCliente(@RequestBody Cliente cliente) {
+        Cliente newCliente = clienteService.saveCliente(cliente);
+        return ResponseEntity.ok(newCliente);
     }
 
     @PutMapping("/{id}")

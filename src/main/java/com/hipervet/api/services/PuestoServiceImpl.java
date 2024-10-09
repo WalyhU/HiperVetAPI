@@ -14,8 +14,8 @@ public class PuestoServiceImpl implements PuestoService {
     private PuestoRepository puestoRepository;
 
     @Override
-    public void savePuesto(Puesto puesto) {
-        puestoRepository.save(puesto);
+    public Puesto savePuesto(Puesto puesto) {
+        return puestoRepository.save(puesto);
     }
 
     @Override
@@ -34,10 +34,11 @@ public class PuestoServiceImpl implements PuestoService {
     }
 
     @Override
-    public void updatePuestoById(Short id, Puesto puesto) {
+    public Puesto updatePuestoById(Short id, Puesto puesto) {
         if (puestoRepository.existsById(id)) {
             puesto.setId(id);
-            puestoRepository.save(puesto);
+            return puestoRepository.save(puesto);
         }
+        return null;
     }
 }

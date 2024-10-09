@@ -16,8 +16,8 @@ public class CitaServiceImpl implements CitaService {
     private CitaRepository citaRepository;
 
     @Override
-    public void saveCita(Cita cita) {
-        citaRepository.save(cita);
+    public Cita saveCita(Cita cita) {
+        return citaRepository.save(cita);
     }
 
     @Override

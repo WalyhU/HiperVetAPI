@@ -19,8 +19,9 @@ public class DetalleCitaServiceImpl implements DetalleCitaService {
 
     @Override
     public DetalleCita saveDetalleCita(DetalleCita detalleCita) {
-        Cita cita = detalleCita.getCita();
-        if (cita != null) {
+        // Verificar si existe la cita, si no existe, guardarla
+        if (detalleCita.getCita() != null) {
+            Cita cita = detalleCita.getCita();
             citaService.saveCita(cita);
         }
         return detalleCitaRepository.save(detalleCita);
@@ -37,7 +38,8 @@ public class DetalleCitaServiceImpl implements DetalleCitaService {
             detalleCita.setId(detalleCitaId);
             Cita cita = detalleCita.getCita();
             if (cita != null) {
-                citaService.saveCita(cita);
+                cita = citaService.saveCita(cita);
+                detalleCita.setCita(cita);
             }
             return detalleCitaRepository.save(detalleCita);
         }

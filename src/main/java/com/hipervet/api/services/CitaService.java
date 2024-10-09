@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.Optional;
 
 public interface CitaService {
-    public void saveCita(Cita cita);
+    public Cita saveCita(Cita cita);
     public void deleteCita(Cita cita);
     public List<Cita> getCitas();
     public Optional<Cita> getCitaById(CitaId id);

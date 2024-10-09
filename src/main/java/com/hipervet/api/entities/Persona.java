@@ -15,34 +15,34 @@ import java.time.LocalDate;
 @Table(name = "Persona")
 public class Persona {
     @Id
-    @Column(name = "CodigoPersona", nullable = false)
+    @Column(name = "codigo_persona", nullable = false)
     private Integer id;
 
-    @Column(name = "PrimerNombre", length = 128)
+    @Column(name = "primer_nombre", length = 128)
     private String primerNombre;
 
-    @Column(name = "SegundoNombre", length = 128)
+    @Column(name = "segundo_nombre", length = 128)
     private String segundoNombre;
 
-    @Column(name = "TercerNombre", length = 128)
+    @Column(name = "tercer_nombre", length = 128)
     private String tercerNombre;
 
-    @Column(name = "PrimerApellido", nullable = false, length = 128)
+    @Column(name = "primer_apellido", nullable = false, length = 128)
     private String primerApellido;
 
-    @Column(name = "SegundoApellido", length = 128)
+    @Column(name = "segundo_apellido", length = 128)
     private String segundoApellido;
 
-    @Column(name = "TercerApellido", length = 128)
+    @Column(name = "tercer_apellido", length = 128)
     private String tercerApellido;
 
-    @Column(name = "TipoPersona", nullable = false)
+    @Column(name = "tipo_persona", nullable = false)
     private Character tipoPersona;
 
-    @Column(name = "RazonSocial", length = 256)
+    @Column(name = "razon_social", length = 256)
     private String razonSocial;
 
-    @Column(name = "FechaNacimiento")
+    @Column(name = "fecha_nacimiento")
     private LocalDate fechaNacimiento;
 
 }

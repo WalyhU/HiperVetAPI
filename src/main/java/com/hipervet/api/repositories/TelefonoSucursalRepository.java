@@ -1,8 +1,11 @@
 package com.hipervet.api.repositories;
 
-import com.hipervet.api.entities.TelefonoSucursal;
-import com.hipervet.api.entities.TelefonoSucursalId;
+import com.hipervet.api.entities.*;
 import org.springframework.data.jpa.repository.JpaRepository;
 
+import java.util.List;
+
 public interface TelefonoSucursalRepository extends JpaRepository<TelefonoSucursal, TelefonoSucursalId> {
+    public void deleteTelefonoSucursalByCorrelativoTelefono(Telefono correlativoTelefono);
+    public List<TelefonoSucursal> findAllByCodigoSucursal(Sucursal codigoSucursal);
 }

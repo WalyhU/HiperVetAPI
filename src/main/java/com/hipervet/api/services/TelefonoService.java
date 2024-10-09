@@ -1,13 +1,18 @@
 package com.hipervet.api.services;
 
-import com.hipervet.api.entities.Telefono;
+import com.hipervet.api.entities.*;
 
 import java.util.List;
 
 public interface TelefonoService {
-    public void saveTelefono(Telefono telefono);
-    public void deleteTelefono(Telefono telefono);
-    public void updateTelefono(Integer id, Telefono telefono);
-    public Telefono getTelefonoById(Integer id);
+    TelefonoPersona asignarTelefonoPersona(Persona codigoPersona, Telefono numeroTelefono);
+    TelefonoSucursal asignarTelefonoSucursal(Sucursal codigoSucursal, Telefono numeroTelefono);
+    public void deleteTelefonoPersona(Telefono id);
+    public void deleteTelefonoSucursal(Telefono id);
+    public TelefonoPersona updateTelefonoPersona(Integer id, TelefonoPersona telefonoPersona);
+    public TelefonoSucursal updateTelefonoSucursal(Integer id, TelefonoSucursal telefonoSucursal);
     public List<Telefono> getAllTelefonos();
+    public Telefono getTelefonoById(Integer id);
+    public List<TelefonoPersona> getTelefonoPersonaByCodigoPersona(Persona id);
+    public List<TelefonoSucursal> getTelefonoSucursalByCodigoSucursal(Sucursal id);
 }
