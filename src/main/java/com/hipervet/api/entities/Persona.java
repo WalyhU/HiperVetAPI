@@ -1,9 +1,6 @@
 package com.hipervet.api.entities;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -15,7 +12,8 @@ import java.time.LocalDate;
 @Table(name = "Persona")
 public class Persona {
     @Id
-    @Column(name = "codigo_persona", nullable = false)
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "codigo_persona")
     private Integer id;
 
     @Column(name = "primer_nombre", length = 128)

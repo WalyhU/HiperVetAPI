@@ -1,25 +1,25 @@
 package com.hipervet.api.entities;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
 @Getter
 @Setter
 @Entity
-@Table(name = "Sucursal")
+@Table(name = "sucursal")
 public class Sucursal {
     @Id
-    @Column(name = "CodigoSucursal", nullable = false)
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "codigo_sucursal", nullable = false)
     private Short id;
 
-    @Column(name = "NombreSucursal", nullable = false, length = 128)
+    @Column(name = "nombre_sucursal", nullable = false, length = 128)
     private String nombreSucursal;
 
-    @Column(name = "Direccion", nullable = false, length = 256)
+    @Column(name = "direccion", nullable = false, length = 256)
     private String direccion;
 
 }

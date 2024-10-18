@@ -20,8 +20,8 @@ public class TratamientoController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<DetalleDeTratamiento> getDetalleDeTratamientoById(@PathVariable Integer id, @RequestBody DetalleDeTratamiento detalleDeTratamiento) {
-        DetalleDeTratamiento detalleDeTratamientoById = detalleDeTratamientoService.getDetalleDeTratamientoById(detalleDeTratamiento.getCodigoTratamiento());
+    public ResponseEntity<DetalleDeTratamiento> getDetalleDeTratamientoById(@PathVariable Integer id) {
+        DetalleDeTratamiento detalleDeTratamientoById = detalleDeTratamientoService.getDetalleDeTratamientoById(id);
         if (detalleDeTratamientoById == null) {
             return ResponseEntity.notFound().build();
         }
@@ -42,9 +42,10 @@ public class TratamientoController {
         return ResponseEntity.ok(updatedDetalleDeTratamiento);
     }
 
-    @DeleteMapping
-    public ResponseEntity<Void> deleteDetalleDeTratamiento(@RequestBody DetalleDeTratamiento id) {
-        detalleDeTratamientoService.deleteDetalleDeTratamiento(id);
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteDetalleDeTratamiento(@PathVariable Integer id) {
+        DetalleDeTratamiento detalleDeTratamiento = detalleDeTratamientoService.getDetalleDeTratamientoById(id);
+        detalleDeTratamientoService.deleteDetalleDeTratamiento(detalleDeTratamiento);
         return ResponseEntity.noContent().build();
     }
 }

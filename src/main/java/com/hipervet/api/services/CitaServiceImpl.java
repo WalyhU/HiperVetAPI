@@ -31,12 +31,12 @@ public class CitaServiceImpl implements CitaService {
     }
 
     @Override
-    public Optional<Cita> getCitaById(CitaId id) {
+    public Optional<Cita> getCitaById(String id) {
         return citaRepository.findById(id);
     }
 
     @Override
-    public Cita updateCita(CitaId id, Cita citaDetails) {
+    public Cita updateCita(String id, Cita citaDetails) {
         if (citaRepository.existsById(id)) {
             citaDetails.setId(id);
             return citaRepository.save(citaDetails);

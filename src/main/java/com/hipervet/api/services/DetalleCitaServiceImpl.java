@@ -1,7 +1,7 @@
 package com.hipervet.api.services;
 
 import com.hipervet.api.entities.*;
-import com.hipervet.api.repositories.DetalleCitaRepository;
+import com.hipervet.api.repositories.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,15 +15,45 @@ public class DetalleCitaServiceImpl implements DetalleCitaService {
     private DetalleCitaRepository detalleCitaRepository;
 
     @Autowired
-    private CitaService citaService;
+    private CitaRepository citaRepository;
+
+    @Autowired
+    private SucursalRepository sucursalRepository;
+
+    @Autowired
+    private ClienteRepository clienteRepository;
+
+    @Autowired
+    private EmpleadoRepository empleadoRepository;
+
+    @Autowired
+    private FichaMascotaRepository fichaMascotaRepository;
+
+    @Autowired
+    private ServicioRepository servicioRepository;
 
     @Override
     public DetalleCita saveDetalleCita(DetalleCita detalleCita) {
-        // Verificar si existe la cita, si no existe, guardarla
-        if (detalleCita.getCita() != null) {
-            Cita cita = detalleCita.getCita();
-            citaService.saveCita(cita);
+        Cita cita = detalleCita.getCita();
+        Sucursal sucursal = sucursalRepository.findById(cita.getCodigoSucursal().getId()).orElse(null);
+        Cliente cliente = clienteRepository.findById(cita.getCodigoCliente().getCodigoCliente()).orElse(null);
+        Empleado empleado = empleadoRepository.findById(cita.getCodigoEmpleado().getId()).orElse(null);
+        FichaMascota fichaMascota = fichaMascotaRepository.findById(detalleCita.getNumeroFicha().getId()).orElse(null);
+        Servicio servicio = servicioRepository.findById(detalleCita.getCodigoServicio().getId()).orElse(null);
+
+        if (fichaMascota == null) {
+            throw new IllegalArgumentException("Numero ficha cannot be null");
         }
+
+        cita.setCodigoSucursal(sucursal);
+        cita.setCodigoCliente(cliente);
+        cita.setCodigoEmpleado(empleado);
+        Cita newCita = citaRepository.save(cita);
+
+        detalleCita.setNumeroFicha(fichaMascota);
+        detalleCita.setCodigoServicio(servicio);
+        detalleCita.setCita(newCita);
+
         return detalleCitaRepository.save(detalleCita);
     }
 
@@ -33,15 +63,23 @@ public class DetalleCitaServiceImpl implements DetalleCitaService {
     }
 
     @Override
-    public DetalleCita updateDetalleCita(DetalleCitaId detalleCitaId, DetalleCita detalleCita) {
+    public DetalleCita updateDetalleCita(Integer detalleCitaId, DetalleCita detalleCita) {
         if (detalleCitaRepository.existsById(detalleCitaId)) {
-            detalleCita.setId(detalleCitaId);
-            Cita cita = detalleCita.getCita();
-            if (cita != null) {
-                cita = citaService.saveCita(cita);
-                detalleCita.setCita(cita);
+            // Actualizar la cita asociada al detalle de la cita
+            if (citaRepository.existsById(detalleCita.getCita().getId())) {
+                Cita cita = detalleCita.getCita();
+                Sucursal sucursal = sucursalRepository.getReferenceById(cita.getCodigoSucursal().getId());
+                Cliente cliente = clienteRepository.getReferenceById(cita.getCodigoCliente().getCodigoCliente());
+                Empleado empleado = empleadoRepository.getReferenceById(cita.getCodigoEmpleado().getId());
+                cita.setCodigoSucursal(sucursal);
+                cita.setCodigoCliente(cliente);
+                cita.setCodigoEmpleado(empleado);
+                Cita newCita = citaRepository.save(cita);
+                detalleCita.setCita(newCita);
             }
-            return detalleCitaRepository.save(detalleCita);
+            detalleCita.setId(detalleCitaId);
+            detalleCitaRepository.save(detalleCita);
+            return detalleCita;
         }
         return null;
     }
@@ -52,7 +90,7 @@ public class DetalleCitaServiceImpl implements DetalleCitaService {
     }
 
     @Override
-    public DetalleCita getDetalleCitaById(DetalleCitaId id) {
+    public DetalleCita getDetalleCitaById(Integer id) {
         return detalleCitaRepository.findById(id).orElse(null);
     }
 
@@ -74,5 +112,10 @@ public class DetalleCitaServiceImpl implements DetalleCitaService {
     @Override
     public List<DetalleCita> getDetalleCitasByFechaBetween(Instant fechaInicio, Instant fechaFin) {
         return detalleCitaRepository.findDetalleCitasByInicioBetween(fechaInicio, fechaFin);
+    }
+
+    @Override
+    public String getCorrelativo() {
+        return String.format("CI%d-%d", detalleCitaRepository.count(), Instant.now().getEpochSecond());
     }
 }

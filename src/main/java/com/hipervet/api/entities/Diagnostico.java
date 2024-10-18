@@ -1,9 +1,6 @@
 package com.hipervet.api.entities;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -13,10 +10,11 @@ import lombok.Setter;
 @Table(name = "Diagnostico")
 public class Diagnostico {
     @Id
-    @Column(name = "CodigoDiagnostico", nullable = false)
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "codigo_diagnostico", nullable = false)
     private Short id;
 
-    @Column(name = "Descripcion", length = 256)
+    @Column(name = "descripcion", length = 256)
     private String descripcion;
 
 }

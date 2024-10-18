@@ -1,5 +1,6 @@
 package com.hipervet.api.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -7,19 +8,20 @@ import lombok.Setter;
 @Getter
 @Setter
 @Entity
-@Table(name = "TelefonoPersona")
+@Table(name = "telefono_persona")
 public class TelefonoPersona {
-    @EmbeddedId
-    private TelefonoPersonaId id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "id_telefono_persona")
+    private Integer id;
 
-    @MapsId("correlativoTelefono")
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "CorrelativoTelefono", nullable = false)
+    @JoinColumn(name = "correlativo_telefono", nullable = false)
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     private Telefono correlativoTelefono;
 
-    @MapsId("codigoPersona")
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "CodigoPersona", nullable = false)
+    @ManyToOne(fetch = FetchType.EAGER, optional = false)
+    @JoinColumn(name = "codigo_persona", nullable = false)
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     private Persona codigoPersona;
-
 }

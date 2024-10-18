@@ -1,7 +1,6 @@
 package com.hipervet.api.services;
 
 import com.hipervet.api.entities.TelefonoSucursal;
-import com.hipervet.api.entities.TelefonoSucursalId;
 import com.hipervet.api.repositories.TelefonoSucursalRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -30,7 +29,7 @@ public class TelefonoSucursalServiceImpl implements TelefonoSucursalService {
     }
 
     @Override
-    public TelefonoSucursal getTelefonoSucursalById(TelefonoSucursalId id) {
+    public TelefonoSucursal getTelefonoSucursalById(Integer id) {
         return telefonoSucursalRepository.findById(id).orElse(null);
     }
 

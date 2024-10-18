@@ -32,8 +32,7 @@ public class TelefonoServiceImpl implements TelefonoService {
                 .orElseThrow(() -> new RuntimeException("Persona no encontrada con el código: " + codigoPersona));
 
         // Verificar si el teléfono ya existe
-        Telefono telefono = telefonoRepository.findById(numeroTelefono.getId())
-                .orElseGet(() -> telefonoRepository.save(new Telefono(0, numeroTelefono.getNumeroTelefono())));
+        Telefono telefono = telefonoRepository.save(new Telefono(null, numeroTelefono.getNumeroTelefono()));
 
         TelefonoPersona telefonoPersona = new TelefonoPersona();
         telefonoPersona.setCodigoPersona(persona);
@@ -48,8 +47,7 @@ public class TelefonoServiceImpl implements TelefonoService {
                 .orElseThrow(() -> new RuntimeException("Sucursal no encontrada con el código: " + codigoSucursal.getId()));
 
         // Verificar si el teléfono ya existe
-        Telefono telefono = telefonoRepository.findById(numeroTelefono.getId())
-                .orElseGet(() -> telefonoRepository.save(new Telefono(0, numeroTelefono.getNumeroTelefono())));
+        Telefono telefono = telefonoRepository.save(new Telefono(null, numeroTelefono.getNumeroTelefono()));
 
         TelefonoSucursal telefonoSucursal = new TelefonoSucursal();
         telefonoSucursal.setCodigoSucursal(sucursal);
@@ -58,33 +56,51 @@ public class TelefonoServiceImpl implements TelefonoService {
     }
 
     @Override
-    public void deleteTelefonoPersona(Telefono id) {
-        telefonoPersonaRepository.deleteTelefonoPersonaByCorrelativoTelefono(id);
+    public void deleteTelefonoPersona(Integer id) {
+        TelefonoPersona telefonoPersona = telefonoPersonaRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Teléfono no encontrado con el código: " + id));
+        Integer idTelefono = telefonoPersona.getCorrelativoTelefono().getId();
+        telefonoPersonaRepository.deleteById(id);
+        telefonoRepository.deleteById(idTelefono);
     }
 
     @Override
-    public void deleteTelefonoSucursal(Telefono id) {
-        telefonoSucursalRepository.deleteTelefonoSucursalByCorrelativoTelefono(id);
+    public void deleteTelefonoSucursal(Integer id) {
+        TelefonoSucursal telefonoSucursal = telefonoSucursalRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Teléfono no encontrado con el código: " + id));
+        Integer idTelefono = telefonoSucursal.getCorrelativoTelefono().getId();
+        telefonoSucursalRepository.deleteById(id);
+        telefonoRepository.deleteById(idTelefono);
     }
 
     @Override
     public TelefonoPersona updateTelefonoPersona(Integer id, TelefonoPersona telefonoPersona) {
-        Telefono telefono = telefonoRepository.findById(id)
+        TelefonoPersona telefonoPersona1 = telefonoPersonaRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Teléfono no encontrado con el código: " + id));
+        Telefono telefono = telefonoRepository.findById(telefonoPersona1.getCorrelativoTelefono().getId())
                 .orElseThrow(() -> new RuntimeException("Teléfono no encontrado con el código: " + id));
         telefono.setNumeroTelefono(telefonoPersona.getCorrelativoTelefono().getNumeroTelefono());
         telefono = telefonoRepository.save(telefono);
-        telefonoPersona.setCorrelativoTelefono(telefono);
-        return telefonoPersonaRepository.save(telefonoPersona);
+        telefonoPersona1.setCorrelativoTelefono(telefono);
+        Persona persona = personaRepository.findById(telefonoPersona.getCodigoPersona().getId())
+                .orElseThrow(() -> new RuntimeException("Persona no encontrada con el código: " + telefonoPersona.getCodigoPersona().getId()));
+        telefonoPersona1.setCodigoPersona(persona);
+        return telefonoPersonaRepository.save(telefonoPersona1);
     }
 
     @Override
     public TelefonoSucursal updateTelefonoSucursal(Integer id, TelefonoSucursal telefonoSucursal) {
-        Telefono telefono = telefonoRepository.findById(id)
+        TelefonoSucursal telefonoSucursal1 = telefonoSucursalRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Teléfono no encontrado con el código: " + id));
+        Telefono telefono = telefonoRepository.findById(telefonoSucursal1.getCorrelativoTelefono().getId())
                 .orElseThrow(() -> new RuntimeException("Teléfono no encontrado con el código: " + id));
         telefono.setNumeroTelefono(telefonoSucursal.getCorrelativoTelefono().getNumeroTelefono());
         telefono = telefonoRepository.save(telefono);
-        telefonoSucursal.setCorrelativoTelefono(telefono);
-        return telefonoSucursalRepository.save(telefonoSucursal);
+        telefonoSucursal1.setCorrelativoTelefono(telefono);
+        Sucursal sucursal = sucursalRepository.findById(telefonoSucursal.getCodigoSucursal().getId())
+                .orElseThrow(() -> new RuntimeException("Sucursal no encontrada con el código: " + telefonoSucursal.getCodigoSucursal().getId()));
+        telefonoSucursal1.setCodigoSucursal(sucursal);
+        return telefonoSucursalRepository.save(telefonoSucursal1);
     }
 
     @Override
@@ -101,6 +117,16 @@ public class TelefonoServiceImpl implements TelefonoService {
     @Override
     public List<TelefonoSucursal> getTelefonoSucursalByCodigoSucursal(Sucursal id) {
         return telefonoSucursalRepository.findAllByCodigoSucursal(id);
+    }
+
+    @Override
+    public List<TelefonoPersona> getAllTelefonoPersona() {
+        return telefonoPersonaRepository.findAll();
+    }
+
+    @Override
+    public List<TelefonoSucursal> getAllTelefonoSucursal() {
+        return telefonoSucursalRepository.findAll();
     }
 
     @Override

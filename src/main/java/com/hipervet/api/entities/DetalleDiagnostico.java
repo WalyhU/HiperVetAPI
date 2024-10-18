@@ -12,14 +12,14 @@ public class DetalleDiagnostico {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "codigo_detalle_diagnostico", nullable = false)
+    @Column(name = "codigo_detalle_diagnostico")
     private Integer codigoDetalleDiagnostico;
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @ManyToOne(fetch = FetchType.EAGER)
     private DetalleCita detalleCita;
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "codigo_diagnostico", nullable = false)
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "codigo_diagnostico")
     private Diagnostico codigoDiagnostico;
 
 }

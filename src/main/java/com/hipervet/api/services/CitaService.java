@@ -10,8 +10,8 @@ public interface CitaService {
     public Cita saveCita(Cita cita);
     public void deleteCita(Cita cita);
     public List<Cita> getCitas();
-    public Optional<Cita> getCitaById(CitaId id);
-    public Cita updateCita(CitaId id, Cita citaDetails);
+    public Optional<Cita> getCitaById(String id);
+    public Cita updateCita(String id, Cita citaDetails);
     public List<Cita> getCitasBySucursal(Sucursal sucursal);
     public List<Cita> getCitasByCliente(Cliente cliente);
     public List<Cita> getCitasByEmpleado(Empleado empleado);

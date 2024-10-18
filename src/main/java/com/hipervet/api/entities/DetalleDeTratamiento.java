@@ -1,5 +1,6 @@
 package com.hipervet.api.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -13,17 +14,23 @@ public class DetalleDeTratamiento {
     @Column(name = "codigo_detalle_tratamiento", nullable = false)
     private Integer codigoDetalleTratamiento;
 
-    @Column(name = "correlativo", nullable = false)
-    private Integer correlativo;
+    @ManyToOne
+    @JoinColumn(name = "correlativo")
+    private DetalleCita correlativo;
 
-    @Column(name = "numero_cita", nullable = false)
-    private Integer numeroCita;
+    @ManyToOne
+    @JoinColumn(name = "numero_cita")
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+    private Cita numeroCita;
 
-    @Column(name = "numero_ficha", nullable = false)
-    private Integer numeroFicha;
+    @ManyToOne
+    @JoinColumn(name = "numero_ficha")
+    private FichaMascota numeroFicha;
 
-    @Column(name = "codigo_sucursal", nullable = false)
-    private Short codigoSucursal;
+    @ManyToOne
+    @JoinColumn(name = "codigo_sucursal")
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+    private Sucursal codigoSucursal;
 
     @ManyToOne
     @JoinColumn(name = "codigo_tratamiento")

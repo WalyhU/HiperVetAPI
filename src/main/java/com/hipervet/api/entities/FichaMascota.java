@@ -1,5 +1,6 @@
 package com.hipervet.api.entities;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -9,27 +10,28 @@ import java.time.LocalDate;
 @Getter
 @Setter
 @Entity
-@Table(name = "FichaMascota")
+@Table(name = "ficha_mascota")
 public class FichaMascota {
     @Id
-    @Column(name = "NumeroFicha", nullable = false)
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "numero_ficha", nullable = false)
     private Integer id;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "CodigoEspecie")
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "codigo_especie")
     private Especie codigoEspecie;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "CodigoRaza")
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "codigo_raza")
     private Raza codigoRaza;
 
-    @Column(name = "Nombre", length = 64)
+    @Column(name = "nombre", length = 64)
     private String nombre;
 
-    @Column(name = "FechaNacimiento", nullable = false)
+    @Column(name = "fecha_nacimiento", nullable = false)
     private LocalDate fechaNacimiento;
 
-    @Column(name = "Talla")
+    @Column(name = "talla")
     private Short talla;
 
 }

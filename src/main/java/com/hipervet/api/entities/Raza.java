@@ -1,22 +1,20 @@
 package com.hipervet.api.entities;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
 @Getter
 @Setter
 @Entity
-@Table(name = "Raza")
+@Table(name = "raza")
 public class Raza {
     @Id
-    @Column(name = "CodigoRaza", nullable = false)
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "codigo_raza", nullable = false)
     private Short id;
 
-    @Column(name = "Descripcion", length = 1)
+    @Column(name = "descripcion")
     private String descripcion;
 
 }

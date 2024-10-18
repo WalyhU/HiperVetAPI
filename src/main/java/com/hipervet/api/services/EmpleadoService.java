@@ -8,8 +8,8 @@ import java.util.List;
 public interface EmpleadoService {
     public Empleado save(Empleado empleado);
     public void delete(Empleado empleado);
-    public Empleado updateEmpleado(Integer id, Empleado empleado);
+    public Empleado updateEmpleado(String id, Empleado empleado);
     public List<Empleado> findAll();
-    public Empleado findById(Integer id);
+    public Empleado findById(String id);
     public List<Empleado> findByPuesto(Puesto id);
 }

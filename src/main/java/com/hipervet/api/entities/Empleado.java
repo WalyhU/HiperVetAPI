@@ -7,18 +7,18 @@ import lombok.Setter;
 @Getter
 @Setter
 @Entity
-@Table(name = "Empleado")
+@Table(name = "empleado")
 public class Empleado {
     @Id
-    @Column(name = "CodigoEmpleado", nullable = false)
-    private Integer id;
+    @Column(name = "codigo_empleado", nullable = false)
+    private String id;
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "CodigoPersona", nullable = false)
+    @ManyToOne(fetch = FetchType.EAGER, optional = false)
+    @JoinColumn(name = "codigo_persona", nullable = false)
     private Persona codigoPersona;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "CodigoPuesto")
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "codigo_puesto")
     private Puesto codigoPuesto;
 
 }

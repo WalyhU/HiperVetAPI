@@ -8,7 +8,7 @@ import java.time.Instant;
 import java.util.List;
 
 @Repository
-public interface CitaRepository extends JpaRepository<Cita, CitaId> {
+public interface CitaRepository extends JpaRepository<Cita, String> {
     public List<Cita> findCitasByCodigoSucursal(Sucursal codigoSucursal);
     public List<Cita> findCitasByCodigoCliente(Cliente codigoCliente);
     public List<Cita> findCitasByCodigoEmpleado(Empleado codigoEmpleado);

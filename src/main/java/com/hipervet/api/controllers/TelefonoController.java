@@ -27,6 +27,16 @@ public class TelefonoController {
         return ResponseEntity.ok(telefonoService.getAllTelefonos());
     }
 
+    @GetMapping("/persona")
+    public ResponseEntity<List<TelefonoPersona>> getAllTelefonosPersona() {
+        return ResponseEntity.ok(telefonoService.getAllTelefonoPersona());
+    }
+
+    @GetMapping("/sucursal")
+    public ResponseEntity<List<TelefonoSucursal>> getAllTelefonosSucursal() {
+        return ResponseEntity.ok(telefonoService.getAllTelefonoSucursal());
+    }
+
     @GetMapping("/{id}")
     public ResponseEntity<Telefono> getTelefonoById(@PathVariable Integer id) {
         return ResponseEntity.ok(telefonoService.getTelefonoById(id));
@@ -68,15 +78,13 @@ public class TelefonoController {
 
     @DeleteMapping("/persona/{id}")
     public ResponseEntity<Void> deleteTelefonoPersona(@PathVariable Integer id) {
-        Telefono telefono = telefonoService.getTelefonoById(id);
-        telefonoService.deleteTelefonoPersona(telefono);
+        telefonoService.deleteTelefonoPersona(id);
         return ResponseEntity.noContent().build();
     }
 
     @DeleteMapping("/sucursal/{id}")
     public ResponseEntity<Void> deleteTelefonoSucursal(@PathVariable Integer id) {
-        Telefono telefono = telefonoService.getTelefonoById(id);
-        telefonoService.deleteTelefonoSucursal(telefono);
+        telefonoService.deleteTelefonoSucursal(id);
         return ResponseEntity.noContent().build();
     }
 }

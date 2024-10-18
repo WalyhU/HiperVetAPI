@@ -12,7 +12,7 @@ import lombok.Setter;
 @Table(name = "cliente")
 public class Cliente {
     @Id
-    @Column(name = "codigo_cliente", nullable = false, length = 10)
+    @Column(name = "codigo_cliente", nullable = false, length = 20)
     private String codigoCliente;
 
     @ManyToOne(fetch = FetchType.EAGER, optional = false)

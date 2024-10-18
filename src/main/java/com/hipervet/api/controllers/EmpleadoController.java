@@ -21,7 +21,7 @@ public class EmpleadoController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Empleado> getEmpleadoById(@PathVariable Integer id) {
+    public ResponseEntity<Empleado> getEmpleadoById(@PathVariable String id) {
         Empleado empleado = empleadoService.findById(id);
         if (empleado == null) {
             return ResponseEntity.notFound().build();
@@ -44,7 +44,7 @@ public class EmpleadoController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Empleado> updateEmpleado(@PathVariable Integer id, @RequestBody Empleado empleado) {
+    public ResponseEntity<Empleado> updateEmpleado(@PathVariable String id, @RequestBody Empleado empleado) {
         Empleado updatedEmpleado = empleadoService.updateEmpleado(id, empleado);
         if (updatedEmpleado == null) {
             return ResponseEntity.notFound().build();

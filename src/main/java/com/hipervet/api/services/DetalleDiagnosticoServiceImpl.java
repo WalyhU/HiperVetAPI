@@ -8,6 +8,7 @@ import com.hipervet.api.repositories.DiagnosticoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.Instant;
 import java.util.List;
 
 @Service
@@ -19,23 +20,25 @@ public class DetalleDiagnosticoServiceImpl implements DetalleDiagnosticoService 
     @Autowired
     private DiagnosticoRepository diagnosticoRepository;
 
+    @Autowired
+    private DetalleCitaService detalleCitaService;
+
     @Override
     public DetalleDiagnostico save(DetalleDiagnostico detalleDiagnostico) {
         // Verificar si existe el diagnostico
-        if (diagnosticoRepository.existsById(detalleDiagnostico.getCodigoDiagnostico().getId())) {
-            // Obtener el diagnostico y asignarlo al detalleDiagnostico
-            Diagnostico diagnostico = diagnosticoRepository.findById(detalleDiagnostico.getCodigoDiagnostico().getId()).get();
-            detalleDiagnostico.setCodigoDiagnostico(diagnostico);
-            return detalleDiagnosticoRepository.save(detalleDiagnostico);
-        }
         Diagnostico newDiagnostico = diagnosticoRepository.save(detalleDiagnostico.getCodigoDiagnostico());
+        DetalleCita detalleCita = detalleCitaService.getDetalleCitaById(detalleDiagnostico.getDetalleCita().getId());
         detalleDiagnostico.setCodigoDiagnostico(newDiagnostico);
+        detalleDiagnostico.setDetalleCita(detalleCita);
+        detalleDiagnostico.setCodigoDetalleDiagnostico(getCorrelativo());
         return detalleDiagnosticoRepository.save(detalleDiagnostico);
     }
 
     @Override
     public DetalleDiagnostico update(Integer id, DetalleDiagnostico detalleDiagnostico) {
         if (detalleDiagnosticoRepository.existsById(id)) {
+            diagnosticoRepository.save(detalleDiagnostico.getCodigoDiagnostico());
+            detalleDiagnostico.setCodigoDetalleDiagnostico(id);
             return detalleDiagnosticoRepository.save(detalleDiagnostico);
         }
         return null;
@@ -59,5 +62,13 @@ public class DetalleDiagnosticoServiceImpl implements DetalleDiagnosticoService 
     @Override
     public List<DetalleDiagnostico> findByDiagnostico(Diagnostico diagnostico) {
         return detalleDiagnosticoRepository.findByCodigoDiagnostico(diagnostico);
+    }
+
+    public Integer getCorrelativo() {
+        List<DetalleDiagnostico> detalleDiagnosticos = detalleDiagnosticoRepository.findAll();
+        if (detalleDiagnosticos.isEmpty()) {
+            return 1;
+        }
+        return detalleDiagnosticos.getLast().getCodigoDetalleDiagnostico() + 1;
     }
 }

@@ -39,6 +39,12 @@ public class CitaController {
         return ResponseEntity.ok(citas);
     }
 
+    @GetMapping("/correlativo")
+    public ResponseEntity<String> getCorrelativo() {
+        String correlativo = detalleCitaService.getCorrelativo();
+        return ResponseEntity.ok(correlativo);
+    }
+
     @GetMapping("/fecha/{fechaInicio}/{fechaFin}")
     public ResponseEntity<List<DetalleCita>> getCitaByFechaBetween(@PathVariable Instant fechaInicio, @PathVariable Instant fechaFin) {
         List<DetalleCita> citas = detalleCitaService.getDetalleCitasByFechaBetween(fechaInicio, fechaFin);
@@ -46,7 +52,7 @@ public class CitaController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteCita(@PathVariable DetalleCitaId id) {
+    public ResponseEntity<Void> deleteCita(@PathVariable Integer id) {
         Optional<DetalleCita> cita = Optional.ofNullable(detalleCitaService.getDetalleCitaById(id));
         if (cita.isPresent()) {
             detalleCitaService.deleteDetalleCita(cita.get());
@@ -60,8 +66,8 @@ public class CitaController {
         return detalleCitaService.saveDetalleCita(cita);
     }
 
-    @PutMapping("/{id}")
-    public ResponseEntity<DetalleCita> updateCita(@PathVariable DetalleCitaId id, @RequestBody DetalleCita citaDetails) {
+    @PutMapping(value = "/{id}")
+    public ResponseEntity<DetalleCita> updateCita(@PathVariable Integer id, @RequestBody DetalleCita citaDetails) {
         DetalleCita updatedCita = detalleCitaService.updateDetalleCita(id, citaDetails);
         return ResponseEntity.ok(updatedCita);
     }

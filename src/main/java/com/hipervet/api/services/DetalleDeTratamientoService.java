@@ -9,7 +9,7 @@ public interface DetalleDeTratamientoService {
     public DetalleDeTratamiento saveDetalleDeTratamiento(DetalleDeTratamiento detalleDeTratamiento);
     public DetalleDeTratamiento updateDetalleDeTratamiento(Integer id, DetalleDeTratamiento detalleDeTratamiento);
     public void deleteDetalleDeTratamiento(DetalleDeTratamiento detalleDeTratamiento);
-    public DetalleDeTratamiento getDetalleDeTratamientoById(Tratamiento id);
+    public DetalleDeTratamiento getDetalleDeTratamientoById(Integer id);
     public List<DetalleDeTratamiento> getDetalleDeTratamientos();
     public List<DetalleDeTratamiento> getDetalleDeTratamientosByTratamiento(Tratamiento tratamiento);
 }

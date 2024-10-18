@@ -21,14 +21,6 @@ public class ClienteServiceImpl implements ClienteService {
 
     @Override
     public Cliente saveCliente(Cliente cliente) {
-        // Verificar si existe la persona
-        if (personaRepository.existsById(cliente.getCodigoPersona().getId())) {
-            // Obtener la persona y asignarla al cliente
-            Persona persona = personaRepository.findById(cliente.getCodigoPersona().getId()).get();
-            cliente.setCodigoPersona(persona);
-            return clienteRepository.save(cliente);
-        }
-        // Si no existe la persona, guardarla
         Persona newPersona = personaRepository.save(cliente.getCodigoPersona());
         cliente.setCodigoPersona(newPersona);
         return clienteRepository.save(cliente);
@@ -37,6 +29,7 @@ public class ClienteServiceImpl implements ClienteService {
     @Override
     public void deleteCliente(Cliente cliente) {
         clienteRepository.delete(cliente);
+        personaRepository.delete(cliente.getCodigoPersona());
     }
 
     @Override
